@@ -1,0 +1,40 @@
+{
+  "name": "react-redux-graphql-example",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Simple React Redux example with GraphQL",
+  "main": "server.js",
+  "scripts": {
+    "build-prod": "node ./node_modules/webpack/bin/webpack.js && node ./server.js",
+    "prod": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production npm run build-prod",
+    "build-dev": "node ./server.js",
+    "dev": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=development npm run build-dev",
+    "start": "npm run prod"
+  },
+  "author": "ABU MD. MARUF SARKER",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "",
+    "babel-core": "",
+    "babel-loader": "",
+    "babel-polyfill": "",
+    "babel-preset-es2015": "",
+    "babel-preset-react": "",
+    "babel-preset-stage-0": "",
+    "babel-register": "",
+    "cross-env": "",
+    "css-loader": "",
+    "express": "",
+    "html-webpack-plugin": "",
+    "html-webpack-template": "",
+    "postcss-loader": "",
+    "precss": "",
+    "react": "",
+    "react-dom": "",
+    "style-loader": "",
+    "webpack": ""
+  },
+  "devDependencies": {
+    "webpack-dev-server": ""
+  }
+}
