@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { toggleTodo, receiveTodos } from '../actions'
 
 const Todo = ({ text, completed, onClick }) => {
     return (
@@ -11,9 +13,10 @@ const Todo = ({ text, completed, onClick }) => {
     )
 }
 
-class TodoList extends React.Component {
+class TodoList extends Component {
     componentDidMount() {
-        this.props.receiveTodos()
+        const { receiveTodos } = this.props
+        receiveTodos()
     }
     render() {
         const { todos, onTodoClick, receiveTodos } = this.props
@@ -38,4 +41,24 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList
+const mapStateToProps = (state) => {
+    return {
+        todos: state.todoList.todos
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onTodoClick: (id) => {
+            dispatch(toggleTodo(id))
+        },
+        receiveTodos: () => {
+            dispatch(receiveTodos())
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TodoList)
