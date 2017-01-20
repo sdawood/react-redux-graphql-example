@@ -12,7 +12,14 @@ export const CONSTANTS = {
     'ADD_TODO': 'ADD_TODO',
     'TOGGLE_TODO': 'TOGGLE_TODO',
     'ASYNC_ACTION': 'ASYNC_ACTION',
-    'RECEIVE_TODOS': 'RECEIVE_TODOS'
+    'RECEIVE_TODOS': 'RECEIVE_TODOS',
+    'SET_VISIBILITY_FILTER': 'SET_VISIBILITY_FILTER'
+}
+
+export const FILTERS = {
+    'SHOW_ALL': 'SHOW_ALL',
+    'SHOW_ACTIVE': 'SHOW_ACTIVE',
+    'SHOW_COMPLETED': 'SHOW_COMPLETED'
 }
 
 const todoID = () => Date.now().toString()
@@ -21,7 +28,7 @@ const asyncGetTodos = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(dbTodoList)
-        }, 2000)
+        }, 500)
     })
 }
 
@@ -37,7 +44,7 @@ const asyncAddTodo = (text) => {
                 }
             ]
             resolve(id)
-        }, 2000)
+        }, 500)
     })
 }
 
@@ -54,7 +61,7 @@ const asyncToggleTodo = (id) => {
                 }
             })
             resolve(id)
-        }, 2000)
+        }, 500)
     })
 }
 
@@ -100,4 +107,21 @@ export const toggleTodo = (id) => {
                 })
             })
     }
+}
+
+export const getVisibleTodos = (
+    todos,
+    filter
+) => {
+    switch(filter){
+        case FILTERS.SHOW_ALL:
+            return todos
+        case FILTERS.SHOW_ACTIVE:
+            return todos.filter(todo => !todo.completed)
+        case FILTERS.SHOW_COMPLETED:
+            return todos.filter(todo => todo.completed)
+        default:
+            return todos
+    }
+
 }
