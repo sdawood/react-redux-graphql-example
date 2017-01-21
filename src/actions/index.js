@@ -16,12 +16,6 @@ export const CONSTANTS = {
     'SET_VISIBILITY_FILTER': 'SET_VISIBILITY_FILTER'
 }
 
-export const FILTERS = {
-    'SHOW_ALL': 'SHOW_ALL',
-    'SHOW_ACTIVE': 'SHOW_ACTIVE',
-    'SHOW_COMPLETED': 'SHOW_COMPLETED'
-}
-
 const todoID = () => Date.now().toString()
 
 const asyncGetTodos = () => {
@@ -71,6 +65,7 @@ const asyncAction = () => {
     }
 }
 
+/* vvv THUNK actions, won't work without the thunk middleware vvv */
 export const receiveTodos = () => {
     return (dispatch) => {
         dispatch(asyncAction())
@@ -109,19 +104,4 @@ export const toggleTodo = (id) => {
     }
 }
 
-export const getVisibleTodos = (
-    todos,
-    filter
-) => {
-    switch(filter){
-        case FILTERS.SHOW_ALL:
-            return todos
-        case FILTERS.SHOW_ACTIVE:
-            return todos.filter(todo => !todo.completed)
-        case FILTERS.SHOW_COMPLETED:
-            return todos.filter(todo => todo.completed)
-        default:
-            return todos
-    }
-
-}
+/* ^^^ THUNK actions, won't work without the thunk middleware ^^^ */

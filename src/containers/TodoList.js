@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { toggleTodo, receiveTodos, getVisibleTodos, FILTERS } from '../actions'
+import { toggleTodo, receiveTodos } from '../actions'
 
 const FilterLink = ({
     filter,
@@ -40,7 +40,14 @@ class TodoList extends Component {
         receiveTodos()
     }
     render() {
-        const { todos, visibilityFilter, onTodoClick, onFilterClick, receiveTodos } = this.props
+        const {
+            todos,
+            isFetching,
+            visibilityFilter,
+            onTodoClick,
+            onFilterClick,
+            receiveTodos
+        } = this.props
         return (
             <div>
                 <button onClick={() => receiveTodos()}>RECEIVE</button>
@@ -64,6 +71,30 @@ class TodoList extends Component {
         )
     }
 }
+
+const FILTERS = {
+    'SHOW_ALL': 'SHOW_ALL',
+    'SHOW_ACTIVE': 'SHOW_ACTIVE',
+    'SHOW_COMPLETED': 'SHOW_COMPLETED'
+}
+
+const getVisibleTodos = (
+    todos,
+    filter
+) => {
+    switch(filter){
+        case FILTERS.SHOW_ALL:
+            return todos
+        case FILTERS.SHOW_ACTIVE:
+            return todos.filter(todo => !todo.completed)
+        case FILTERS.SHOW_COMPLETED:
+            return todos.filter(todo => todo.completed)
+        default:
+            return todos
+    }
+
+}
+
 
 const Footer = ({
     visibilityFilter,
@@ -104,6 +135,7 @@ const Footer = ({
 const mapStateToProps = (state) => {
     return {
         todos: getVisibleTodos(state.todoList.todos, state.visibilityFilter),
+        isFetching: state.todoList.isFetching,
         visibilityFilter: state.visibilityFilter
     }
 }
@@ -125,6 +157,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+/*
+* export a Container Component decorated with store subscribe/unscubscribe
+* and handling context passed by Provider out of the presentational component TodoList
+* */
 export default connect(
     mapStateToProps,
     mapDispatchToProps
