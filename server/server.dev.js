@@ -3,6 +3,8 @@ import path from 'path'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import webpackConfig from '../webpack.config.js'
+import GraphQLHTTP from 'express-graphql'
+import schema from '../graphql/schema'
 
 const APP_PORT = 3000
 
@@ -17,10 +19,17 @@ var app = new WebpackDevServer(compiler, {
 })
 
 app.use('/', express.static(path.resolve(__dirname, '..', 'public')))
+app.use('/graphql', GraphQLHTTP((req) => {
+    return {
+        schema: schema,
+        graphiql: true
+    }
+}))
 app.listen(APP_PORT, (err) => {
     if (err) {
         console.log(err)
     } else {
+        console.log(`GaphQL is serving at http://localhost:${APP_PORT}`)
         console.log(`App is running at http://localhost:${APP_PORT}`)
 }
 })

@@ -16,4 +16,11 @@ let AddTodo = ({ dispatch }) => {
     )
 }
 
-export default connect()(AddTodo)
+export default connect(
+    // state => {
+    //     return {}
+    // },
+    // dispatch => {
+    //     return { dispatch }
+    // }
+)(AddTodo)
